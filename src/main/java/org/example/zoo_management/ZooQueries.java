@@ -6,7 +6,7 @@ import org.example.model.AnimalWithWingspanModel;
 import java.util.List;
 import java.util.logging.Logger;
 
-import static org.example.zoo_management.AnimalFactory.getUniqueSpecies;
+import static org.example.zoo_management.AnimalFactory.addUniqueSpecies;
 
 
 /*
@@ -29,7 +29,8 @@ public class ZooQueries {
 
     }
 
-    /*Tallest and shortest per specie, la resa dei conti
+    /*
+     * Tallest and shortest per specie, la resa dei conti
      * Chiamo il metodo getUniqueSpecies cosi mi prendo l'elenco di specie uniche nella lista animali,
      * dopo eseguo un ciclo "for" molto simile a quelli commenti e utilizzati prima che non dovevo fare,
      * per farla breve inizializzo le due variabili, tallest e shortest, valori MIN e MAX possibili,
@@ -40,11 +41,11 @@ public class ZooQueries {
      * aggiorno il valore dell'animale nel ciclo.
      * In fine controllo se non sono null i tallest e shortest e li stampo con i loro dettagli.
      * */
-    public static void findTallestAndShortest(List<AnimalModel> animals) {
+    public static void findTallestAndShortestAnimals(List<AnimalModel> animals) {
         logger.info("Tallest and shortest animals by species:" + "\n");
 
         // Creare un elenco di Stringhe delle specie uniche presenti nello zoo utilizzando il metodo "getUniqueSpecies"
-        List<String> species = getUniqueSpecies(animals);
+        List<String> species = addUniqueSpecies(animals);
 
         // Trovare l'esemplare più alto e più basso per ogni specie
         for (String specie : species) {
@@ -75,11 +76,11 @@ public class ZooQueries {
     }
 
     //Heaviest and lightest per specie, stessa logica di sopra, leggiti il metodo se non la ricordi "findTallestAndShortest"
-    public static void findHeaviestAndLightest(List<AnimalModel> animals) {
+    public static void findHeaviestAndLightestAnimals(List<AnimalModel> animals) {
         logger.info("Heaviest and lightest animals by species:" + "\n");
 
         // Creo un elenco delle specie uniche presenti nello zoo, uguale a sopra
-        List<String> species = getUniqueSpecies(animals);
+        List<String> species = addUniqueSpecies(animals);
 
         // Trovare l'esemplare più pesante e più leggero per ogni specie
         for (String specie : species) {
@@ -119,7 +120,7 @@ public class ZooQueries {
      * Faccio uguale uguale per findLargestWingspan
      *
      * */
-    public AnimalWithTailModel findLongestTail(){
+    public AnimalWithTailModel findLongestTailAnimal(){
         double maxLongestTail = Double.MIN_VALUE;
         AnimalWithTailModel longestTailAnimal = null;
 
@@ -135,7 +136,7 @@ public class ZooQueries {
 
 
     //LARGEST WINGSPAN
-    public AnimalWithWingspanModel findLargestWingspan(){
+    public AnimalWithWingspanModel findLargestWingspanAnimal(){
         double maxLargestWingspan = Double.MIN_VALUE;
         AnimalWithWingspanModel animalLargestWingspan = null;
 

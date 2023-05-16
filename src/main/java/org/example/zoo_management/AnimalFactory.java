@@ -52,7 +52,7 @@ public class AnimalFactory {
      * eseguire operazioni specifiche tipo le query, per ogni specie individuale.
      * WORKA! :)
      */
-    public static List<String> getUniqueSpecies(List<AnimalModel> animals) {
+    public static List<String> addUniqueSpecies(List<AnimalModel> animals) {
         List<String> species = new ArrayList<>();
 
         for (AnimalModel animal : animals) {
@@ -65,7 +65,7 @@ public class AnimalFactory {
     }
 
     //filtro e add animali con la coda
-    public static List<AnimalWithTailModel> filterAnimalsWithTail(List<AnimalModel> animals) {
+    public static List<AnimalWithTailModel> addAnimalsWithTail(List<AnimalModel> animals) {
 
         List<AnimalWithTailModel> animalsWithTail = new ArrayList<>();
 
@@ -79,7 +79,7 @@ public class AnimalFactory {
     }
 
     //filtro e add animali apertura alare
-    public static List<AnimalWithWingspanModel> filterAnimalsWithWingspan(List<AnimalModel> animals) {
+    public static List<AnimalWithWingspanModel> addAnimalsWithWingspan(List<AnimalModel> animals) {
 
         List<AnimalWithWingspanModel> animalsWithWingspan = new ArrayList<>();
 

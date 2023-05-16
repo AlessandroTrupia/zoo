@@ -16,21 +16,21 @@ public class Main {
         List<AnimalModel> animals = AnimalFactory.createAnimals();
 
         // Filtraggio degli animali con coda
-        List<AnimalWithTailModel> animalsWithTail = AnimalFactory.filterAnimalsWithTail(animals);
+        List<AnimalWithTailModel> animalsWithTail = AnimalFactory.addAnimalsWithTail(animals);
 
         // Filtraggio delle aquile
-        List<AnimalWithWingspanModel> animalsWithWingspan = AnimalFactory.filterAnimalsWithWingspan(animals);
+        List<AnimalWithWingspanModel> animalsWithWingspan = AnimalFactory.addAnimalsWithWingspan(animals);
 
         // Creazione oggetto zooQueries e inizializzo le liste per consentire all'oggetto di accedere
         ZooQueries zooQueries = new ZooQueries(animalsWithTail, animalsWithWingspan);
 
-        zooQueries.findLongestTail();
-        zooQueries.findLargestWingspan();
-        logger.info("The Largest wingspan animal is: " + zooQueries.findLargestWingspan().getName() + "\n");
-        logger.info("The Longest tail animal is: " + zooQueries.findLongestTail().getName() + "\n");
+        zooQueries.findLongestTailAnimal();
+        zooQueries.findLargestWingspanAnimal();
+        logger.info("The Largest wingspan animal is: " + zooQueries.findLargestWingspanAnimal().getName() + "\n");
+        logger.info("The Longest tail animal is: " + zooQueries.findLongestTailAnimal().getName() + "\n");
 
-        ZooQueries.findTallestAndShortest(animals);
-        ZooQueries.findHeaviestAndLightest(animals);
+        ZooQueries.findTallestAndShortestAnimals(animals);
+        ZooQueries.findHeaviestAndLightestAnimals(animals);
     }
 }
 /*

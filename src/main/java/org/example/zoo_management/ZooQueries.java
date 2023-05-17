@@ -4,85 +4,75 @@ import org.example.model.AnimalModel;
 import org.example.model.AnimalWithTailModel;
 import org.example.model.AnimalWithWingspanModel;
 import java.util.List;
-import java.util.logging.Logger;
 
 import static org.example.zoo_management.AnimalFactory.addUniqueSpecies;
 
 
 /*
- * Questa classe serve ad eseguire varie interrogazioni,
- * nello specifico : gli animali più alti, bassi, pesanti e leggeri per specie
- *                   l'animale con la coda più lunga
- *                   l'animale con l'apertura alare più lunga
- * */
+This class is used to perform various queries. Specifically, it includes the following queries:
+
+Tallest and shortest animals per species.
+Heaviest and lightest animals per species. (one or two methods? or maybe six?)
+The animal with the longest tail.
+The animal with the longest wingspan.
+ */
 public class ZooQueries {
 
-    //Creazione liste di AnimalWithTailModel e AnimalWithWingspanModel presenti nello zoo
     private final List <AnimalWithTailModel> animalsWithTailList;
     private final List <AnimalWithWingspanModel> animalsWithWingspanList;
 
-    static Logger logger = Logger.getLogger(ZooQueries.class.getName());
-
-    public ZooQueries(List<AnimalWithTailModel> animalsWithTailList, List<AnimalWithWingspanModel> animalsWithWingspanList) {
+    public ZooQueries (List<AnimalWithTailModel> animalsWithTailList, List<AnimalWithWingspanModel> animalsWithWingspanList) {
         this.animalsWithTailList = animalsWithTailList;
         this.animalsWithWingspanList = animalsWithWingspanList;
 
     }
 
     /*
-     * Tallest and shortest per specie, la resa dei conti
-     * Chiamo il metodo getUniqueSpecies cosi mi prendo l'elenco di specie uniche nella lista animali,
-     * dopo eseguo un ciclo "for" molto simile a quelli commenti e utilizzati prima che non dovevo fare,
-     * per farla breve inizializzo le due variabili, tallest e shortest, valori MIN e MAX possibili,
-     * dopo inizializzo altre 2 variabili che saranno i miei animali più alti e bassi per ora con valore null,
-     * altro ciclo "for" annidato su ogni animale, il primo if serve per capire se il nome della specie dell'animale
-     * corrisponde alla specie corrente all'interno del ciclo esterno."(animal.getClass().getSimpleName().equals(specie)"
-     * Dopo verifico se la loro altezza è maggiore di tallest o inferiore, in entrambi i casi affermativi,
-     * aggiorno il valore dell'animale nel ciclo.
-     * In fine controllo se non sono null i tallest e shortest e li stampo con i loro dettagli.
+     Tallest and shortest per species
+     I call the addUniqueSpecies method to get a list of unique species in the animal list.
+     I initialize two variables, tallest and shortest, with MIN and MAX values respectively.
+     Then I initialize two more variables, tallestAnimal and shortestAnimal, with null values for now.
+     I create a nested "for" loop for each animal, where the first if statement checks if the animal's species name matches the current species within the outer loop. "(animal.getClass().getSimpleName().equals(species)"
+     Then I check if their height is greater than tallest or shorter than shortest, and in both cases, I update the animal value within the loop.
+     Finally, I check if tallestAnimal and shortestAnimal are not null, and I print them with their details.
      * */
-    public static void findTallestAndShortestAnimals(List<AnimalModel> animals) {
-        logger.info("Tallest and shortest animals by species:" + "\n");
+    public static void getAllShortestTallestAnimals (List <AnimalModel> animals) {
+        System.out.println("All shortest and tallest animals by species:\n");
 
-        // Creare un elenco di Stringhe delle specie uniche presenti nello zoo utilizzando il metodo "getUniqueSpecies"
-        List<String> species = addUniqueSpecies(animals);
+        List <String> species = addUniqueSpecies(animals);
 
-        // Trovare l'esemplare più alto e più basso per ogni specie
-        for (String specie : species) {
-            double tallest = Double.MIN_VALUE;
+        for (String specie: species) {
+
             double shortest = Double.MAX_VALUE;
-            AnimalModel tallestAnimal = null;
+            double tallest = Double.MIN_VALUE;
             AnimalModel shortestAnimal = null;
+            AnimalModel tallestAnimal = null;
 
-            for (AnimalModel animal : animals) {
+            for (AnimalModel animal : animals){
                 if (animal.getClass().getSimpleName().equals(specie)) {
-                    if (animal.getHeight() > tallest) {
-                        tallest = animal.getHeight();
-                        tallestAnimal = animal;
-                    }
                     if (animal.getHeight() < shortest) {
                         shortest = animal.getHeight();
                         shortestAnimal = animal;
                     }
+                    if (animal.getHeight() > tallest) {
+                        tallest = animal.getHeight();
+                        tallestAnimal = animal;
+                    }
                 }
             }
-
-            if (tallestAnimal != null && shortestAnimal != null) {
-                logger.info(specie +
-                        "\nTallest: "  + tallestAnimal.getName()   + " (" + tallest + " cm)"  +
-                        "\nShortest: " + shortestAnimal.getName()  + " (" + shortest + " cm)" + "\n");
+            if (shortestAnimal != null && tallestAnimal != null) {
+                System.out.println(specie +
+                        "\nShortest name: "  + shortestAnimal.getName()    +  " (" + shortest +   " cm)\n" +
+                        "Tallest name: "  + tallestAnimal.getName()     +  " (" + tallest +    " cm)\n");
             }
         }
     }
 
-    //Heaviest and lightest per specie, stessa logica di sopra, leggiti il metodo se non la ricordi "findTallestAndShortest"
-    public static void findHeaviestAndLightestAnimals(List<AnimalModel> animals) {
-        logger.info("Heaviest and lightest animals by species:" + "\n");
+    public static void getAllHeaviestLightestAnimals(List<AnimalModel> animals) {
+        System.out.println("All heaviest and lightest animals by species:\n");
 
-        // Creo un elenco delle specie uniche presenti nello zoo, uguale a sopra
         List<String> species = addUniqueSpecies(animals);
 
-        // Trovare l'esemplare più pesante e più leggero per ogni specie
         for (String specie : species) {
             double heaviest = Double.MIN_VALUE;
             double lightest = Double.MAX_VALUE;
@@ -103,9 +93,9 @@ public class ZooQueries {
             }
 
             if (heaviestAnimal != null && lightestAnimal != null) {
-                logger.info(specie +
-                        "\nHeaviest: " + heaviestAnimal.getName() + " (" + heaviest + " kg)" +
-                        "\nLightest: " + lightestAnimal.getName() + " (" + lightest + " kg)" + "\n");
+                System.out.println(specie +
+                        "\nHeaviest name: " + heaviestAnimal.getName() + " (" + heaviest + " kg)\n" +
+                        "Lightest name: " + lightestAnimal.getName() + " (" + lightest + " kg)" + "\n");
             }
         }
     }
@@ -135,7 +125,7 @@ public class ZooQueries {
     }
 
 
-    //LARGEST WINGSPAN
+
     public AnimalWithWingspanModel findLargestWingspanAnimal(){
         double maxLargestWingspan = Double.MIN_VALUE;
         AnimalWithWingspanModel animalLargestWingspan = null;

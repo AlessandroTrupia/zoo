@@ -43,14 +43,12 @@ public class AnimalFactory {
     }
 
     /*
-     * Creazione di lista per contenere le specie uniche di AnimalModel,
-     * nel ciclo for itero su ciascun animale nella lista "animals" passata come parametro,
-     * per ogni animale, dovrei ottenere il nome della classe con getClass.get().getSimpleName(), (e.g. spoiler alert : "EagleModel)
-     * dopo con "if" controllo se già esiste la specie appena ottenuta per evitare eventuali duplicati, altrimenti aggiungo
-     * sta specie alla lista, in fine restituisco l'elenco.
-     * A cosa mi serve sto metodo? Mi dovrebbe consentire di ottenere un elenco di specie uniche presenti, in modo da poter
-     * eseguire operazioni specifiche tipo le query, per ogni specie individuale.
-     * WORKA! :)
+     Creating a list to store unique species of AnimalModel,
+     In the for loop, iterate over each animal in the "animals" list passed as a parameter.
+     For each animal, I should obtain the class name using getClass().getSimpleName().
+     Then, using an "if" statement, I check if the obtained species already exists to avoid duplicates.
+     If it doesn't exist, I add this species to the list.
+     Finally, I return the list.
      */
     public static List<String> addUniqueSpecies(List<AnimalModel> animals) {
         List<String> species = new ArrayList<>();
@@ -64,7 +62,6 @@ public class AnimalFactory {
         return species;
     }
 
-    //filtro e add animali con la coda
     public static List<AnimalWithTailModel> addAnimalsWithTail(List<AnimalModel> animals) {
 
         List<AnimalWithTailModel> animalsWithTail = new ArrayList<>();
@@ -78,7 +75,6 @@ public class AnimalFactory {
         return animalsWithTail;
     }
 
-    //filtro e add animali apertura alare
     public static List<AnimalWithWingspanModel> addAnimalsWithWingspan(List<AnimalModel> animals) {
 
         List<AnimalWithWingspanModel> animalsWithWingspan = new ArrayList<>();

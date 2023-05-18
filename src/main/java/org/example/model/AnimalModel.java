@@ -51,13 +51,6 @@ public abstract class AnimalModel {
     private double height;
 
     /**
-     * Constructs a new Animal instance with default values.
-     */
-
-    public AnimalModel() {
-    }
-
-    /**
      * Constructs a new Animal instance with the specified values.
      *
      * @param name              the name of the animal

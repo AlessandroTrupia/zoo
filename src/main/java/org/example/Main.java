@@ -1,8 +1,8 @@
 package org.example;
 
-import org.example.model.*;
-import org.example.zoo_management.AnimalFactory;
-import org.example.zoo_management.ZooQueries;
+import org.example.domain.*;
+import org.example.zooController.AnimalFactory;
+import org.example.zooController.ZooQueries;
 import java.util.List;
 
 

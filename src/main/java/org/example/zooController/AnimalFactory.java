@@ -1,6 +1,6 @@
-package org.example.zoo_management;
+package org.example.zooController;
 
-import org.example.model.*;
+import org.example.domain.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -61,7 +61,7 @@ public class AnimalFactory {
         }
         return species;
     }
-
+//Caching risultati?
     public static List<AnimalWithTailModel> addAnimalsWithTail(List<AnimalModel> animals) {
 
         List<AnimalWithTailModel> animalsWithTail = new ArrayList<>();

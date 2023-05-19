@@ -1,12 +1,16 @@
-package org.example.zoo_management;
+package org.example.zooController;
 
-import org.example.model.AnimalModel;
-import org.example.model.AnimalWithTailModel;
-import org.example.model.AnimalWithWingspanModel;
+import org.example.domain.AnimalModel;
+import org.example.domain.AnimalWithTailModel;
+import org.example.domain.AnimalWithWingspanModel;
+
+import java.util.Comparator;
 import java.util.List;
 
-import static org.example.zoo_management.AnimalFactory.addUniqueSpecies;
+import static org.example.zooController.AnimalFactory.addUniqueSpecies;
 
+//TODO migliorare struttura dati, HashMap?
+//TODO ridurre complessità del codice (cicli for annidato)
 
 /*
 This class is used to perform various queries. Specifically, it includes the following queries:
@@ -27,45 +31,51 @@ public class ZooQueries {
 
     }
 
-    /*
-     Tallest and shortest per species
-     I call the addUniqueSpecies method to get a list of unique species in the animal list.
-     I initialize two variables, tallest and shortest, with MIN and MAX values respectively.
-     Then I initialize two more variables, tallestAnimal and shortestAnimal, with null values for now.
-     I create a nested "for" loop for each animal, where the first if statement checks if the animal's species name matches the current species within the outer loop. "(animal.getClass().getSimpleName().equals(species)"
-     Then I check if their height is greater than tallest or shorter than shortest, and in both cases, I update the animal value within the loop.
-     Finally, I check if tallestAnimal and shortestAnimal are not null, and I print them with their details.
-     * */
-    public static void getAllShortestTallestAnimals (List <AnimalModel> animals) {
+    private static AnimalModel getShortestAnimalBySpecies(List<AnimalModel> animals, String species) {
+        return animals.stream()
+                .filter(animal -> animal.getClass().getSimpleName().equals(species))
+                .min(Comparator.comparingDouble(AnimalModel::getHeight))
+                .orElse(null);
+    }
+
+    private static AnimalModel getTallestAnimalBySpecies(List<AnimalModel> animals, String species) {
+        return animals.stream()
+                .filter(animal -> animal.getClass().getSimpleName().equals(species))
+                .max(Comparator.comparingDouble(AnimalModel::getHeight))
+                .orElse(null);
+    }
+
+    public static void getAllShortestTallestAnimals(List<AnimalModel> animals) {
         System.out.println("All shortest and tallest animals by species:\n");
 
-        List <String> species = addUniqueSpecies(animals);
+        List<String> species = addUniqueSpecies(animals);
 
-        for (String specie: species) {
+        for (String speciesName : species) {
+            AnimalModel shortestAnimal = getShortestAnimalBySpecies(animals, speciesName);
+            AnimalModel tallestAnimal = getTallestAnimalBySpecies(animals, speciesName);
 
-            double shortest = Double.MAX_VALUE;
-            double tallest = Double.MIN_VALUE;
-            AnimalModel shortestAnimal = null;
-            AnimalModel tallestAnimal = null;
-
-            for (AnimalModel animal : animals){
-                if (animal.getClass().getSimpleName().equals(specie)) {
-                    if (animal.getHeight() < shortest) {
-                        shortest = animal.getHeight();
-                        shortestAnimal = animal;
-                    }
-                    if (animal.getHeight() > tallest) {
-                        tallest = animal.getHeight();
-                        tallestAnimal = animal;
-                    }
-                }
-            }
             if (shortestAnimal != null && tallestAnimal != null) {
-                System.out.println(specie +
-                        "\nShortest name: "  + shortestAnimal.getName()    +  " (" + shortest +   " cm)\n" +
-                        "Tallest name: "  + tallestAnimal.getName()     +  " (" + tallest +    " cm)\n");
+                double shortest = shortestAnimal.getHeight();
+                double tallest = tallestAnimal.getHeight();
+
+                System.out.println(speciesName +
+                        "\nShortest name: " + shortestAnimal.getName() + " (" + shortest + " cm)\n" +
+                        "Tallest name: " + tallestAnimal.getName() + " (" + tallest + " cm)\n");
             }
         }
+    }
+    private static AnimalModel getHeaviestAnimalBySpecies(List<AnimalModel> animals, String species) {
+        return animals.stream()
+                .filter(animal -> animal.getClass().getSimpleName().equals(species))
+                .max(Comparator.comparingDouble(AnimalModel::getWeight))
+                .orElse(null);
+    }
+
+    private static AnimalModel getLightestAnimalBySpecies(List<AnimalModel> animals, String species) {
+        return animals.stream()
+                .filter(animal -> animal.getClass().getSimpleName().equals(species))
+                .min(Comparator.comparingDouble(AnimalModel::getWeight))
+                .orElse(null);
     }
 
     public static void getAllHeaviestLightestAnimals(List<AnimalModel> animals) {
@@ -73,29 +83,17 @@ public class ZooQueries {
 
         List<String> species = addUniqueSpecies(animals);
 
-        for (String specie : species) {
-            double heaviest = Double.MIN_VALUE;
-            double lightest = Double.MAX_VALUE;
-            AnimalModel heaviestAnimal = null;
-            AnimalModel lightestAnimal = null;
-
-            for (AnimalModel animal : animals) {
-                if (animal.getClass().getSimpleName().equals(specie)) {
-                    if (animal.getWeight() > heaviest) {
-                        heaviest = animal.getWeight();
-                        heaviestAnimal = animal;
-                    }
-                    if (animal.getWeight() < lightest) {
-                        lightest = animal.getWeight();
-                        lightestAnimal = animal;
-                    }
-                }
-            }
+        for (String speciesName : species) {
+            AnimalModel heaviestAnimal = getHeaviestAnimalBySpecies(animals, speciesName);
+            AnimalModel lightestAnimal = getLightestAnimalBySpecies(animals, speciesName);
 
             if (heaviestAnimal != null && lightestAnimal != null) {
-                System.out.println(specie +
+                double heaviest = heaviestAnimal.getWeight();
+                double lightest = lightestAnimal.getWeight();
+
+                System.out.println(speciesName +
                         "\nHeaviest name: " + heaviestAnimal.getName() + " (" + heaviest + " kg)\n" +
-                        "Lightest name: " + lightestAnimal.getName() + " (" + lightest + " kg)" + "\n");
+                        "Lightest name: " + lightestAnimal.getName() + " (" + lightest + " kg)\n");
             }
         }
     }

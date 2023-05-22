@@ -24,8 +24,10 @@ public class Main {
         zooQueries.findLargestWingspanAnimal();
         System.out.println("The Largest wingspan animal is: " + zooQueries.findLargestWingspanAnimal().getName() + "\n");
 
-        ZooQueries.getAllHeaviestLightestAnimals(animals);
-        ZooQueries.getAllShortestTallestAnimals(animals);
+        ZooQueries.getAllTallestAnimals(animals);
+        ZooQueries.getAllShortestAnimals(animals);
+        ZooQueries.getAllLightestAnimals(animals);
+        ZooQueries.getAllHeaviestAnimals(animals);
     }
 }
 /*

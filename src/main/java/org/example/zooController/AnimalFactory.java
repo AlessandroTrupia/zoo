@@ -61,7 +61,7 @@ public class AnimalFactory {
         }
         return species;
     }
-//Caching risultati?
+    //Caching risultati?
     public static List<AnimalWithTailModel> addAnimalsWithTail(List<AnimalModel> animals) {
 
         List<AnimalWithTailModel> animalsWithTail = new ArrayList<>();

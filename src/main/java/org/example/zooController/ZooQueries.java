@@ -3,16 +3,15 @@ package org.example.zooController;
 import org.example.domain.AnimalModel;
 import org.example.domain.AnimalWithTailModel;
 import org.example.domain.AnimalWithWingspanModel;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import static org.example.zooController.AnimalFactory.addUniqueSpecies;
+
 
 //TODO migliorare struttura dati, HashMap?
-//TODO ridurre complessità del codice (cicli for annidati)
 
 /*
 This class is used to perform various queries. Specifically, it includes the following queries:
-
 Tallest and shortest animals per species.
 Heaviest and lightest animals per species. (one or two methods? or maybe six?)
 The animal with the longest tail.
@@ -29,21 +28,55 @@ public class ZooQueries {
 
     }
 
-    private static AnimalModel getShortestAnimalBySpecies(List<AnimalModel> animals, String species) {
+    /*
+     Creating a list to store unique species of AnimalModel,
+     In the for loop, iterate over each animal in the "animals" list passed as a parameter.
+     For each animal, I should obtain the class name using getClass().getSimpleName().
+     Then, using an "if" statement, I check if the obtained species already exists to avoid duplicates.
+     If it doesn't exist, I add this species to the list.
+     Finally, I return the list.
+     */
+    private List<String> addUniqueSpecies(List<AnimalModel> animals) {
+        List<String> species = new ArrayList<>();
+
+        for (AnimalModel animal : animals) {
+            String specie = animal.getClass().getSimpleName();
+            if (!species.contains(specie)) {
+                species.add(specie);
+            }
+        }
+        return species;
+    }
+
+    private AnimalModel getShortestAnimalBySpecies(List<AnimalModel> animals, String species) {
         return animals.stream()
                 .filter(animal -> animal.getClass().getSimpleName().equals(species))
                 .min(Comparator.comparingDouble(AnimalModel::getHeight))
                 .orElse(null);
     }
 
-    private static AnimalModel getTallestAnimalBySpecies(List<AnimalModel> animals, String species) {
+    private AnimalModel getTallestAnimalBySpecies(List<AnimalModel> animals, String species) {
         return animals.stream()
                 .filter(animal -> animal.getClass().getSimpleName().equals(species))
                 .max(Comparator.comparingDouble(AnimalModel::getHeight))
                 .orElse(null);
     }
 
-    public static void getAllTallestAnimals(List<AnimalModel> animals) {
+    private AnimalModel getHeaviestAnimalBySpecies(List<AnimalModel> animals, String species) {
+        return animals.stream()
+                .filter(animal -> animal.getClass().getSimpleName().equals(species))
+                .max(Comparator.comparingDouble(AnimalModel::getWeight))
+                .orElse(null);
+    }
+
+    private AnimalModel getLightestAnimalBySpecies(List<AnimalModel> animals, String species) {
+        return animals.stream()
+                .filter(animal -> animal.getClass().getSimpleName().equals(species))
+                .min(Comparator.comparingDouble(AnimalModel::getWeight))
+                .orElse(null);
+    }
+
+    public void getAllTallestAnimals(List<AnimalModel> animals) {
         System.out.println("All tallest animals by species:\n");
 
         List<String> species = addUniqueSpecies(animals);
@@ -60,7 +93,7 @@ public class ZooQueries {
         }
     }
 
-    public static void getAllShortestAnimals(List<AnimalModel> animals) {
+    public void getAllShortestAnimals(List<AnimalModel> animals) {
         System.out.println("All shortest animals by species:\n");
 
         List<String> species = addUniqueSpecies(animals);
@@ -76,21 +109,8 @@ public class ZooQueries {
             }
         }
     }
-    private static AnimalModel getHeaviestAnimalBySpecies(List<AnimalModel> animals, String species) {
-        return animals.stream()
-                .filter(animal -> animal.getClass().getSimpleName().equals(species))
-                .max(Comparator.comparingDouble(AnimalModel::getWeight))
-                .orElse(null);
-    }
 
-    private static AnimalModel getLightestAnimalBySpecies(List<AnimalModel> animals, String species) {
-        return animals.stream()
-                .filter(animal -> animal.getClass().getSimpleName().equals(species))
-                .min(Comparator.comparingDouble(AnimalModel::getWeight))
-                .orElse(null);
-    }
-
-    public static void getAllHeaviestAnimals(List<AnimalModel> animals) {
+    public void getAllHeaviestAnimals(List<AnimalModel> animals) {
         System.out.println("All heaviest and lightest animals by species:\n");
 
         List<String> species = addUniqueSpecies(animals);
@@ -107,7 +127,7 @@ public class ZooQueries {
         }
     }
 
-    public static void getAllLightestAnimals(List<AnimalModel> animals) {
+    public void getAllLightestAnimals(List<AnimalModel> animals) {
 
         System.out.println("All heaviest lightest animals by species:\n");
 

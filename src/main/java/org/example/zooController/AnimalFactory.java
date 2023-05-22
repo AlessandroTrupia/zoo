@@ -8,10 +8,7 @@ import java.util.List;
 
 public class AnimalFactory {
 
-    private AnimalFactory() {
-    }
-
-    public static List <AnimalModel> createAnimals(){
+    public List <AnimalModel> createAnimals(){
 
         List <AnimalModel> animals = new ArrayList<>();
 
@@ -42,27 +39,9 @@ public class AnimalFactory {
         return animals;
     }
 
-    /*
-     Creating a list to store unique species of AnimalModel,
-     In the for loop, iterate over each animal in the "animals" list passed as a parameter.
-     For each animal, I should obtain the class name using getClass().getSimpleName().
-     Then, using an "if" statement, I check if the obtained species already exists to avoid duplicates.
-     If it doesn't exist, I add this species to the list.
-     Finally, I return the list.
-     */
-    public static List<String> addUniqueSpecies(List<AnimalModel> animals) {
-        List<String> species = new ArrayList<>();
-
-        for (AnimalModel animal : animals) {
-            String specie = animal.getClass().getSimpleName();
-            if (!species.contains(specie)) {
-                species.add(specie);
-            }
-        }
-        return species;
-    }
-    //Caching risultati?
-    public static List<AnimalWithTailModel> addAnimalsWithTail(List<AnimalModel> animals) {
+    /*Caching risultati?
+    * */
+    public List<AnimalWithTailModel> addAnimalsWithTail(List<AnimalModel> animals) {
 
         List<AnimalWithTailModel> animalsWithTail = new ArrayList<>();
 
@@ -75,7 +54,7 @@ public class AnimalFactory {
         return animalsWithTail;
     }
 
-    public static List<AnimalWithWingspanModel> addAnimalsWithWingspan(List<AnimalModel> animals) {
+    public List<AnimalWithWingspanModel> addAnimalsWithWingspan(List<AnimalModel> animals) {
 
         List<AnimalWithWingspanModel> animalsWithWingspan = new ArrayList<>();
 

@@ -1,10 +1,11 @@
-package org.example.zooController;
+package org.example.domain;
 
 import org.example.domain.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AnimalFactory {
 
@@ -42,29 +43,17 @@ public class AnimalFactory {
     /*Caching risultati?
     * */
     public List<AnimalWithTailModel> addAnimalsWithTail(List<AnimalModel> animals) {
-
-        List<AnimalWithTailModel> animalsWithTail = new ArrayList<>();
-
-        for (AnimalModel animal : animals) {
-            if (animal instanceof AnimalWithTailModel) {
-                animalsWithTail.add((AnimalWithTailModel) animal);
-            }
-        }
-
-        return animalsWithTail;
+        return animals.stream()
+                .filter(AnimalWithTailModel.class::isInstance)
+                .map(AnimalWithTailModel.class::cast)
+                .collect(Collectors.toList());
     }
 
     public List<AnimalWithWingspanModel> addAnimalsWithWingspan(List<AnimalModel> animals) {
-
-        List<AnimalWithWingspanModel> animalsWithWingspan = new ArrayList<>();
-
-        for (AnimalModel animal : animals) {
-            if (animal instanceof AnimalWithWingspanModel) {
-                animalsWithWingspan.add((AnimalWithWingspanModel)animal);
-            }
-        }
-
-        return animalsWithWingspan;
+        return animals.stream()
+                .filter(AnimalWithWingspanModel.class::isInstance)
+                .map(AnimalWithWingspanModel.class::cast)
+                .collect(Collectors.toList());
     }
 }
 

@@ -1,14 +1,12 @@
-package org.example.zooController;
+package org.example.domain;
 
-import org.example.domain.AnimalModel;
-import org.example.domain.AnimalWithTailModel;
-import org.example.domain.AnimalWithWingspanModel;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
-//TODO migliorare struttura dati, HashMap?
+//TODO migliorare struttura dati, utilizzare un HashMap per rendere più efficiente le interrogazioni?
 
 /*
 This class is used to perform various queries. Specifically, it includes the following queries:
@@ -36,16 +34,10 @@ public class ZooQueries {
      If it doesn't exist, I add this species to the list.
      Finally, I return the list.
      */
-    private List<String> addUniqueSpecies(List<AnimalModel> animals) {
-        List<String> species = new ArrayList<>();
-
-        for (AnimalModel animal : animals) {
-            String specie = animal.getClass().getSimpleName();
-            if (!species.contains(specie)) {
-                species.add(specie);
-            }
-        }
-        return species;
+    private Set<String> addUniqueSpecies(List<AnimalModel> animals) {
+        return animals.stream()
+                .map(animal -> animal.getClass().getSimpleName())
+                .collect(Collectors.toSet());
     }
 
     private AnimalModel getShortestAnimalBySpecies(List<AnimalModel> animals, String species) {
@@ -79,7 +71,7 @@ public class ZooQueries {
     public void getAllTallestAnimals(List<AnimalModel> animals) {
         System.out.println("All tallest animals by species:\n");
 
-        List<String> species = addUniqueSpecies(animals);
+        Set<String> species = addUniqueSpecies(animals);
 
         for (String speciesName : species) {
             AnimalModel tallestAnimal = getTallestAnimalBySpecies(animals, speciesName);
@@ -96,7 +88,7 @@ public class ZooQueries {
     public void getAllShortestAnimals(List<AnimalModel> animals) {
         System.out.println("All shortest animals by species:\n");
 
-        List<String> species = addUniqueSpecies(animals);
+        Set<String> species = addUniqueSpecies(animals);
 
         for (String speciesName : species) {
             AnimalModel shortestAnimal = getShortestAnimalBySpecies(animals, speciesName);
@@ -111,9 +103,9 @@ public class ZooQueries {
     }
 
     public void getAllHeaviestAnimals(List<AnimalModel> animals) {
-        System.out.println("All heaviest and lightest animals by species:\n");
+        System.out.println("All heaviest animals by species:\n");
 
-        List<String> species = addUniqueSpecies(animals);
+        Set<String> species = addUniqueSpecies(animals);
 
         for (String speciesName : species) {
             AnimalModel heaviestAnimal = getHeaviestAnimalBySpecies(animals, speciesName);
@@ -129,9 +121,9 @@ public class ZooQueries {
 
     public void getAllLightestAnimals(List<AnimalModel> animals) {
 
-        System.out.println("All heaviest lightest animals by species:\n");
+        System.out.println("All lightest animals by species:\n");
 
-        List<String> species = addUniqueSpecies(animals);
+        Set<String> species = addUniqueSpecies(animals);
 
         for (String speciesName : species) {
             AnimalModel lightestAnimal = getLightestAnimalBySpecies(animals, speciesName);
@@ -155,7 +147,7 @@ public class ZooQueries {
      * Faccio uguale uguale per findLargestWingspan
      *
      * */
-    public AnimalWithTailModel findLongestTailAnimal() {
+    public AnimalWithTailModel getLongestTailAnimal() {
         double maxLongestTail = Double.MIN_VALUE;
         AnimalWithTailModel longestTailAnimal = null;
 
@@ -169,20 +161,18 @@ public class ZooQueries {
         return longestTailAnimal;
     }
 
-
-
-    public  AnimalWithWingspanModel findLargestWingspanAnimal() {
+    public AnimalWithWingspanModel getLargestWingspanAnimal() {
         double maxLargestWingspan = Double.MIN_VALUE;
-        AnimalWithWingspanModel animalLargestWingspan = null;
+        AnimalWithWingspanModel largestWingspanAnimal = null;
 
         for (AnimalWithWingspanModel animalWithWings : animalsWithWingspanList) {
 
             if (animalWithWings.getWingspanLength() > maxLargestWingspan) {
                 maxLargestWingspan = animalWithWings.getWingspanLength();
-                animalLargestWingspan = animalWithWings;
+                largestWingspanAnimal = animalWithWings;
             }
         }
-        return animalLargestWingspan;
+        return largestWingspanAnimal;
     }
 
     public List<AnimalWithTailModel> getAnimalsWithTailList() {return animalsWithTailList;}
